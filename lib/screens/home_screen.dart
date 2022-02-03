@@ -1,19 +1,26 @@
 import 'dart:ui';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:screen_navigation/common/widgets/app_drawer.dart';
 import 'package:screen_navigation/core/utils/colors.dart';
 import 'package:screen_navigation/core/utils/sizes.dart';
 import 'package:screen_navigation/core/utils/textStyle.dart';
+import 'package:screen_navigation/screens/product_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   static const String routeName = "home-screen";
 
-  HomeScreen({Key? key}) : super(key: key);
-  var height = AppBar().preferredSize.height;
-  final GlobalKey<ScaffoldState> _key = GlobalKey(); // Create a key
+  const HomeScreen({Key? key}) : super(key: key);
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  var height = AppBar().preferredSize.height;
+
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
+  // Create a key
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,8 +37,8 @@ class HomeScreen extends StatelessWidget {
         image: DecorationImage(
           image: const AssetImage("assets/images/bg_01.jpeg"),
           fit: BoxFit.cover,
-          colorFilter:
-              ColorFilter.mode(Colors.white.withOpacity(0.4), BlendMode.darken),
+          colorFilter: ColorFilter.mode(
+              Colors.white.withOpacity(0.4), BlendMode.overlay),
         ),
       ),
       child: BackdropFilter(
@@ -43,10 +50,10 @@ class HomeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               height.verticalSpace,
-               Align(
+              Align(
                   alignment: Alignment.centerRight,
                   child: GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       _key.currentState!.openDrawer();
                     },
                     child: const Icon(
@@ -61,8 +68,10 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   Text(
                     "Simply",
-                    style:
-                        StyleText.regularDarkGray15.copyWith(fontSize: 28.fontSize,fontWeight: FontWeight.w300,color: Colors.white),
+                    style: StyleText.regularDarkGray15.copyWith(
+                        fontSize: 28.fontSize,
+                        fontWeight: FontWeight.w300,
+                        color: Colors.white),
                   ),
                   Text(
                     "Pick",
@@ -70,30 +79,30 @@ class HomeScreen extends StatelessWidget {
                   )
                 ],
               ),
-
               30.verticalSpace,
-
               Container(
                 height: 250.flexibleHeight,
-
-                decoration:  BoxDecoration(
+                decoration: BoxDecoration(
                     color: Colors.white,
-                  borderRadius: BorderRadius.circular(8)
-                ),
+                    borderRadius: BorderRadius.circular(22)),
                 child: Padding(
-                  padding:  EdgeInsets.symmetric(horizontal: 8.0.flexibleWidth,vertical: 8.flexibleHeight),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 8.0.flexibleWidth,
+                      vertical: 8.flexibleHeight),
                   child: Column(
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          CachedNetworkImage(imageUrl: "https://png.pngitem.com/pimgs/s/178-1780522_png-file-rainy-weather-icon-png-white-weather.png",
-                          width: 75.flexibleWidth,
-                            height: 75.flexibleHeight,
+                          Image.asset(
+                            "assets/images/clear_sky.png",
+                            width: 68.flexibleWidth,
+                            height: 68.flexibleHeight,
                           ),
                           5.horizontalSpace,
-                           Text("13" + "º",
-                              style:StyleText.mediumDarkGray30.copyWith(fontSize: 45.fontSize))
+                          Text("13" + "º",
+                              style: StyleText.mediumDarkGray30
+                                  .copyWith(fontSize: 45.fontSize))
                         ],
                       ),
                       15.verticalSpace,
@@ -101,9 +110,11 @@ class HomeScreen extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            _buildInnerBoxView("https://www.pinclipart.com/picdir/middle/372-3726154_delivery-clipart-cargo-truck-cargo-van-icon-png.png","Touren"),
+                            _buildInnerBoxView(
+                                "assets/images/delivery_van.png", "Touren"),
                             15.horizontalSpace,
-                            _buildInnerBoxView("https://png.pngitem.com/pimgs/s/178-1780522_png-file-rainy-weather-icon-png-white-weather.png","Pfadruckfabe")
+                            _buildInnerBoxView(
+                                "assets/images/milk_bottle.png", "Pfadruckfabe")
                           ],
                         ),
                       )
@@ -117,23 +128,31 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
-  _buildInnerBoxView(String img,String text){
-    return  Expanded(child: Container(
 
-      decoration: BoxDecoration(
-          color: UIColors.grayTwo,
-          borderRadius: BorderRadius.circular(8)
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CachedNetworkImage(imageUrl: "https://png.pngitem.com/pimgs/s/178-1780522_png-file-rainy-weather-icon-png-white-weather.png",
-            width: 45.flexibleWidth,
-            height: 45.flexibleHeight,
-          ),
-          5.verticalSpace,
-          Text(text,style: StyleText.mediumDarkGray17,)
-        ],
+  _buildInnerBoxView(String img, String text) {
+    return Expanded(
+        child: GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, ProductScreen.routeName, arguments: text);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            color: UIColors.grayTwo, borderRadius: BorderRadius.circular(8)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              img,
+              width: 45.flexibleWidth,
+              height: 45.flexibleHeight,
+            ),
+            2.verticalSpace,
+            Text(
+              text,
+              style: StyleText.mediumDarkGray17,
+            )
+          ],
+        ),
       ),
     ));
   }
