@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:screen_navigation/core/utils/colors.dart';
 
-class TextFormFieldWidget extends StatelessWidget {
+class TextFormFieldWidget extends StatefulWidget {
   final String? Function(String?)? validator;
   final TextInputAction? textInputAction;
   final TextStyle? textStyle;
@@ -84,40 +83,44 @@ class TextFormFieldWidget extends StatelessWidget {
   });
 
   @override
+  State<TextFormFieldWidget> createState() => _TextFormFieldWidgetState();
+}
+
+class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
+  @override
   Widget build(BuildContext context) {
     return TextFormField(
-      onTap: onTap,
-      onChanged: onChange,
-      obscureText: obscureText ?? false,
-      textInputAction: textInputAction,
-      keyboardType: textInputType,
-      style: textStyle,
-      maxLength: maxCharacters,
-        controller: controller,
-      decoration: InputDecoration(
-        floatingLabelBehavior: FloatingLabelBehavior.never,
-        fillColor: fillColor,
-        filled: true,
-        hintText: hintText,
-        hintStyle: hintStyle,
-        labelText: labelText,
-        labelStyle: labelTextStyle,
-        prefixIcon: prefixIcon,
-        suffix: suffix,
-        suffixIcon: suffixIcon,
-        suffixStyle: suffixStyle,
-        border: UnderlineInputBorder(
-        borderRadius:BorderRadius.circular(8.0)
-        ),
-        enabledBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-          borderSide: BorderSide(color: Colors.white),
-        ),
-        focusedBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(8.0)),
-          borderSide: BorderSide(color: Colors.white),
-        ),
-      // onSaved: onSaved,
-      ));
+        onTap: widget.onTap,
+        onChanged: widget.onChange,
+        obscureText: widget.obscureText ?? false,
+        textInputAction: widget.textInputAction,
+        keyboardType: widget.textInputType,
+        style: widget.textStyle,
+        maxLength: widget.maxCharacters,
+        controller: widget.controller,
+        decoration: InputDecoration(
+          floatingLabelBehavior: FloatingLabelBehavior.never,
+          fillColor: widget.fillColor,
+          filled: true,
+          hintText: widget.hintText,
+          hintStyle: widget.hintStyle,
+          labelText: widget.labelText,
+          labelStyle: widget.labelTextStyle,
+          prefixIcon: widget.prefixIcon,
+          suffix: widget.suffix,
+          suffixIcon: widget.suffixIcon,
+          suffixStyle: widget.suffixStyle,
+          border:
+              UnderlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
+          enabledBorder: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.0)),
+            borderSide: BorderSide(color: Colors.white),
+          ),
+          focusedBorder: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.0)),
+            borderSide: BorderSide(color: Colors.white),
+          ),
+          // onSaved: onSaved,
+        ));
   }
 }

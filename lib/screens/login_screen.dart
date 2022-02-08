@@ -8,8 +8,17 @@ import 'package:screen_navigation/core/utils/sizes.dart';
 import 'package:screen_navigation/core/utils/textStyle.dart';
 import 'package:screen_navigation/screens/home_screen.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -61,25 +70,32 @@ class LoginScreen extends StatelessWidget {
                   ],
                 ),
                 50.verticalSpace,
-                TextFormFieldWidget(
-                  hcontentPadding: 0,
-                  fillColor: UIColors.white,
-                  labelTextStyle: StyleText.regularDarkGray18,
-                  textStyle: StyleText.boldDarkGrey16,
-                  hintText: "Name",
-                  hintStyle: StyleText.hintStyle,
-                  controller: TextEditingController(),
-                ),
-                16.verticalSpace,
-                TextFormFieldWidget(
-                  hcontentPadding: 0,
-                  fillColor: UIColors.white,
-                  labelTextStyle: StyleText.regularDarkGray18,
-                  textStyle: StyleText.boldDarkGrey16,
-                  hintText: "Password",
-                  hintStyle: StyleText.hintStyle,
-                  obscureText: true,
-                  controller: TextEditingController(),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      TextFormFieldWidget(
+                        hcontentPadding: 0,
+                        fillColor: UIColors.white,
+                        labelTextStyle: StyleText.regularDarkGray18,
+                        textStyle: StyleText.boldDarkGrey16,
+                        hintText: "Name",
+                        hintStyle: StyleText.hintStyle,
+                        controller: emailController,
+                      ),
+                      16.verticalSpace,
+                      TextFormFieldWidget(
+                        hcontentPadding: 0,
+                        fillColor: UIColors.white,
+                        labelTextStyle: StyleText.regularDarkGray18,
+                        textStyle: StyleText.boldDarkGrey16,
+                        hintText: "Password",
+                        hintStyle: StyleText.hintStyle,
+                        obscureText: true,
+                        controller: passwordController,
+                      ),
+                    ],
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
